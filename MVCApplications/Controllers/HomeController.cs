@@ -63,32 +63,51 @@ namespace MVCApplications.Controllers
         }
         public async Task<IActionResult> DeleteStudent(int id)
         {
-            string i = id.ToString();
+            string StudentId = id.ToString();
             HttpClient client = new HttpClient();
-            HttpResponseMessage httpResponseMessage = await client.DeleteAsync("https://localhost:7044/api/Students/DeleteStudent?id=" + i);
-            return RedirectToAction("ListStudent");
+            HttpResponseMessage httpResponseMessage = await client.DeleteAsync("https://localhost:7078/api/Students/DeleteStudent?id=" + StudentId);
+            return RedirectToAction("Show");
         }
 
-        public async Task<IActionResult> Update(int id, Student student)
+        public async Task<IActionResult> Update(int id)
+        {
+            HttpContext.Session.SetInt32("studentID", id);
+            HttpClient client = new HttpClient();
+            HttpResponseMessage httpResponseMessage = await client.GetAsync("https://localhost:7078/api/Students/GetSingleStudent?id=" + id.ToString());
+            if (httpResponseMessage != null)
+            {
+                string json = await httpResponseMessage.Content.ReadAsStringAsync();
+
+                Student student = Newtonsoft.Json.JsonConvert.DeserializeObject<Student>(json);
+                TempData["UpdateCurrentStudent"] = student;
+                return View();
+
+            }
+            else { return View("Show"); }
+        }
+        public async Task<IActionResult> UpdateConfirm(UpdateViewModel student)
         {
             HttpClient client = new HttpClient();
             Student Existedstudent = new Student();
-           HttpResponseMessage httpResponseMessage = await client.GetAsync("https://localhost:7078/api/Students/GetAllStudents" + id.ToString());
+            var editedStudentId = HttpContext.Session.GetInt32("studentID").Value;
+
+            HttpResponseMessage httpResponseMessage = await client.GetAsync("https://localhost:7078/api/Students/GetSingleStudent?id=" + editedStudentId.ToString());
             if (httpResponseMessage != null)
             {
-                 string json = await httpResponseMessage.Content.ReadAsStringAsync();
+                string json = await httpResponseMessage.Content.ReadAsStringAsync();
 
-                Existedstudent = Newtonsoft.Json.JsonConvert.DeserializeObject<Student> (json);
+                Existedstudent = Newtonsoft.Json.JsonConvert.DeserializeObject<Student>(json);
 
                 Existedstudent.Name = student.Name;
                 Existedstudent.Family = student.Family;
                 Existedstudent.Grade = student.Grade;
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                string newJson = Newtonsoft.Json.JsonConvert.SerializeObject(Existedstudent);
+                var content = new StringContent(newJson, Encoding.UTF8, "application/json");
                 HttpResponseMessage httpResponseMessage1 = await client.PutAsync("https://localhost:7078/api/Students/UodateStudent", content);
-                return RedirectToAction("Insert");
+                return RedirectToAction("Show");
             }
             else { return View(null); }
-             
+
         }
 
 

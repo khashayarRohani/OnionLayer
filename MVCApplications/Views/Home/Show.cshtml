@@ -23,6 +23,7 @@
                   <th>Name</th>
                   <th>Family</th>
                   <th>Grade</th>
+                  <th>Actions</th>
               </tr>
           </thead>
           <tbody>
@@ -36,6 +37,10 @@
                     <td>
                         <a class="btn btn-danger" asp-action="DeleteStudent" asp-controller="Home" asp-route-id="@item.Id">Delete</a>
                     </td>
+                        <td>
+                            <a class="btn btn-danger" asp-action="Update" asp-controller="Home" asp-route-id="@item.Id">Update</a>
+                        </td>
+
                 </tr>
                 }
             
