@@ -1,0 +1,51 @@
+﻿@using DomainLayar.Model;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Insert</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+
+</head>
+<body>
+    @{
+        Student student = TempData["UpdateCurrentStudent"] as Student;
+    }
+    @model UpdateViewModel
+    <div class="container">
+        <div>
+
+            <form asp-action="UpdateConfirm" asp-controller="Home">
+                <table class="table table-bordered" border="1">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Family</th>
+                            <th>Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td><input asp-for="Name" value="@student.Name" /></td>
+                            <td><input asp-for="Family" value="@student.Family" /></td>
+                            <td><input asp-for="Grade" value="@student.Grade" /></td>
+                            <td>
+                                <button class="btn btn-dark">UpdateConfirm</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </form>
+        
+
+   
+</body>
+</html>
