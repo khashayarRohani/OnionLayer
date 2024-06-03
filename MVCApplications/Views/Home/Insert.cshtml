@@ -1,0 +1,37 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Insert</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+
+</head>
+<body>
+    @model InsertViewModel
+    <div class="container">
+        <form asp-controller="Home" asp-action="InsertConfirm">
+            <div class="form-group">
+                <label>Insert Your Name</label>
+                <input class="form-control" asp-for="Name"/>
+            </div>
+            <div class="form-group">
+                <label>Insert Your Family</label>
+                <input class="form-control" asp-for="Family" />
+            </div>
+            <div class="form-group">
+                <label>Insert Your Grade</label>
+                <input class="form-control"  asp-for="Grade"/>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary">Insert</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
