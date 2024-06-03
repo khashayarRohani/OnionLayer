@@ -1,0 +1,47 @@
+﻿@using DomainLayar.Model;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Show</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+</head>
+<body>
+  @model List<Student>
+  <div class="container" style="margin-top:20px" >
+
+
+      <table class="table table-bordered" border="1">
+          <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Family</th>
+                  <th>Grade</th>
+              </tr>
+          </thead>
+          <tbody>
+              
+                  @foreach(var item in Model)
+                {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Family</td>
+                    <td>@item.Grade</td>
+                    <td>
+                        <a class="btn btn-danger" asp-action="DeleteStudent" asp-controller="Home" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+                }
+            
+          </tbody>
+      </table>
+
+    </div>
+</body>
+</html>
